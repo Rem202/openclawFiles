@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小红书"宽窄系列"香烟话题采集分析报告</title>
+<style>
+  :root {
+    --primary: #ff2442;
+    --primary-light: #ff6b81;
+    --bg: #f8f8fc;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
+    --accent1: #ff6b81;
+    --accent2: #4ecdc4;
+    --accent3: #45b7d1;
+    --accent4: #f9ca24;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #ff2442 0%, #ff6b81 50%, #4ecdc4 100%);
+    color: white;
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+  .header h1 {
+    font-size: 2.2em;
+    font-weight: 800;
+    margin-bottom: 12px;
+    position: relative;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .header .subtitle {
+    font-size: 1em;
+    opacity: 0.92;
+    position: relative;
+    font-weight: 400;
+  }
+  .header .meta {
+    margin-top: 16px;
+    font-size: 0.85em;
+    opacity: 0.85;
+    position: relative;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-left: 14px;
+    border-left: 4px solid var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .emoji { font-size: 1.1em; }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    border-radius: 14px;
+    padding: 22px 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+  .stat-card .number {
+    font-size: 2em;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-card .label {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .kw-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .kw-card {
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .kw-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .kw-card.dongpo::before { background: linear-gradient(90deg, #ff6b81, #ff2442); }
+  .kw-card.jinshang::before { background: linear-gradient(90deg, #4ecdc4, #45b7d1); }
+  .kw-card.baoguo::before { background: linear-gradient(90deg, #f9ca24, #f0932b); }
+  .kw-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .kw-card .kw-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .kw-card .kw-stat {
+    text-align: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+  }
+  .kw-card .kw-stat .val {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .kw-card .kw-stat .lbl {
+    font-size: 0.78em;
+    color: var(--text-secondary);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+  }
+  th {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9em;
+  }
+  tr:hover td { background: #fafbfc; }
+  .chart-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  .chart-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+  .chart-caption {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .insight-list {
+    list-style: none;
+    padding: 0;
+  }
+  .insight-list li {
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+    font-size: 0.92em;
+  }
+  .insight-list li strong { color: var(--primary); }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 600;
+  }
+  .tag-dongpo { background: #fff0f3; color: #ff2442; }
+  .tag-jinshang { background: #e8faf9; color: #4ecdc4; }
+  .tag-baoguo { background: #fff8e6; color: #f0932b; }
+  .top-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .top-1 { background: linear-gradient(135deg, #ff6b81, #ff2442); }
+  .top-2 { background: linear-gradient(135deg, #ffa502, #f0932b); }
+  .top-3 { background: linear-gradient(135deg, #4ecdc4, #45b7d1); }
+  .top-other { background: #adb5bd; }
+  .comparison-table {
+    overflow-x: auto;
+  }
+  .comparison-table th { white-space: nowrap; }
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+  }
+  .footer a { color: var(--primary); text-decoration: none; }
+  .highlight-box {
+    background: linear-gradient(135deg, #fff0f3, #e8faf9);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+  }
+  .highlight-box h4 {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: var(--primary);
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.5em; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .kw-cards { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .card { padding: 18px; }
+    .stat-card .number { font-size: 1.5em; }
+  }
+  .progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #e9ecef;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .progress-bar .fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+  .fill-dongpo { background: linear-gradient(90deg, #ff6b81, #ff2442); }
+  .fill-jinshang { background: linear-gradient(90deg, #4ecdc4, #45b7d1); }
+  .fill-baoguo { background: linear-gradient(90deg, #f9ca24, #f0932b); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>📊 小红书"宽窄系列"香烟话题<br>采集分析报告</h1>
+  <div class="subtitle">Xiaohongshu Analysis Report — Kuanzhai Series</div>
+  <div class="meta">📅 2026-04-28 20:42 &nbsp;|&nbsp; 🔍 关键词：宽窄东坡 · 宽窄锦上 · 国宝之恋 &nbsp;|&nbsp; 📝 49 条笔记</div>
+</div>
+
+<div class="container">
+
+  <!-- Section 1: 数据总览 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">📋</span> 一、数据总览</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="number">49</div>
+        <div class="label">笔记总数</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">4,112</div>
+        <div class="label">总点赞</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">1,373</div>
+        <div class="label">总评论</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">1,584</div>
+        <div class="label">总收藏</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">652</div>
+        <div class="label">总分享</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">7,721</div>
+        <div class="label">总互动量</div>
+      </div>
+    </div>
+
+    <div class="kw-cards">
+      <div class="kw-card dongpo">
+        <h3>🏔️ 宽窄东坡</h3>
+        <div class="kw-stats">
+          <div class="kw-stat"><div class="val">18</div><div class="lbl">笔记</div></div>
+          <div class="kw-stat"><div class="val">1,009</div><div class="lbl">点赞</div></div>
+          <div class="kw-stat"><div class="val">423</div><div class="lbl">评论</div></div>
+          <div class="kw-stat"><div class="val">241</div><div class="lbl">收藏</div></div>
+        </div>
+      </div>
+      <div class="kw-card jinshang">
+        <h3>🌸 宽窄锦上</h3>
+        <div class="kw-stats">
+          <div class="kw-stat"><div class="val">14</div><div class="lbl">笔记</div></div>
+          <div class="kw-stat"><div class="val">1,374</div><div class="lbl">点赞</div></div>
+          <div class="kw-stat"><div class="val">730</div><div class="lbl">评论</div></div>
+          <div class="kw-stat"><div class="val">447</div><div class="lbl">收藏</div></div>
+        </div>
+      </div>
+      <div class="kw-card baoguo">
+        <h3>🐼 国宝之恋</h3>
+        <div class="kw-stats">
+          <div class="kw-stat"><div class="val">17</div><div class="lbl">笔记</div></div>
+          <div class="kw-stat"><div class="val">1,729</div><div class="lbl">点赞</div></div>
+          <div class="kw-stat"><div class="val">220</div><div class="lbl">评论</div></div>
+          <div class="kw-stat"><div class="val">896</div><div class="lbl">收藏</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 互动对比 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">📊</span> 二、互动数据对比</div>
+    <div class="card">
+      <div class="chart-container">
+        <img src="https://mdn.alipayobjects.com/one_clip/afts/img/U7IxQbRfMo8AAAAARSAAAAgAoEACAQFr/original" alt="三大关键词互动数据对比">
+        <div class="chart-caption">图1：三大关键词互动数据对比</div>
+      </div>
+      <div class="highlight-box">
+        <h4>💡 关键发现</h4>
+        <ul class="insight-list">
+          <li><strong>宽窄锦上</strong>：评论数最高（730），讨论热度最强</li>
+          <li><strong>国宝之恋</strong>：收藏数最高（896），用户认可度/购买意愿最强</li>
+          <li><strong>宽窄东坡</strong>：笔记数最多（18），但均互动偏低</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="chart-container">
+          <img src="https://mdn.alipayobjects.com/one_clip/afts/img/270UTIbk0lUAAAAARjAAAAgAoEACAQFr/original" alt="互动总量分布">
+          <div class="chart-caption">图2：互动总量分布</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chart-container">
+          <img src="https://mdn.alipayobjects.com/one_clip/afts/img/h3scRI7IB7cAAAAARjAAAAgAoEACAQFr/original" alt="互动转化漏斗">
+          <div class="chart-caption">图3：互动转化漏斗</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: TOP 10 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">🏆</span> 三、TOP 10 热门笔记</div>
+    <div class="card">
+      <div class="chart-container">
+        <img src="https://mdn.alipayobjects.com/one_clip/afts/img/Ry7-RaadV10AAAAASgAAAAgAoEACAQFr/original" alt="TOP 10 评论排名">
+        <div class="chart-caption">图4：TOP 10 笔记评论数排名</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>#</th><th>关键词</th><th>标题</th><th>作者</th><th>评</th><th>赞</th><th>藏</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="top-badge top-1">1</span></td>
+            <td><span class="tag tag-dongpo">宽窄东坡</span></td>
+            <td>有人懂宽窄吗</td><td>李加麻</td><td><strong>204</strong></td><td>211</td><td>32</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-2">2</span></td>
+            <td><span class="tag tag-jinshang">宽窄锦上</span></td>
+            <td>生活就是小酒配宽窄 茉莉花香</td><td>到处跑的小杨同学</td><td><strong>193</strong></td><td>624</td><td>251</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-3">3</span></td>
+            <td><span class="tag tag-jinshang">宽窄锦上</span></td>
+            <td>宽窄锦上你们买成多少</td><td>小啾啾</td><td><strong>138</strong></td><td>40</td><td>12</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">4</span></td>
+            <td><span class="tag tag-jinshang">宽窄锦上</span></td>
+            <td>求推荐 成都南门宽窄锦上</td><td>杰克泼尼马</td><td><strong>105</strong></td><td>58</td><td>24</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">5</span></td>
+            <td><span class="tag tag-jinshang">宽窄锦上</span></td>
+            <td>宽窄锦上</td><td>酒帮主</td><td><strong>99</strong></td><td>169</td><td>32</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">6</span></td>
+            <td><span class="tag tag-dongpo">宽窄东坡</span></td>
+            <td>避雷的成都特产</td><td>玟希希的希</td><td><strong>85</strong></td><td>12</td><td>4</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">7</span></td>
+            <td><span class="tag tag-dongpo">宽窄东坡</span></td>
+            <td>苏东坡联名！这口粮太有文化了</td><td>烟保姆_阿烟</td><td><strong>68</strong></td><td>571</td><td>150</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">8</span></td>
+            <td><span class="tag tag-jinshang">宽窄锦上</span></td>
+            <td>宽窄锦上</td><td>我们又不熟叫我小仙女就好</td><td><strong>65</strong></td><td>55</td><td>10</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">9</span></td>
+            <td><span class="tag tag-baoguo">国宝之恋</span></td>
+            <td>成都机场买🚬</td><td>🐟</td><td><strong>63</strong></td><td>20</td><td>8</td>
+          </tr>
+          <tr>
+            <td><span class="top-badge top-other">10</span></td>
+            <td><span class="tag tag-jinshang">宽窄锦上</span></td>
+            <td>宽窄锦上茉莉</td><td>不会摄影的小磊子</td><td><strong>58</strong></td><td>30</td><td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 4: 各关键词深度分析 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">🔍</span> 四、各关键词深度分析</div>
+
+    <div class="card">
+      <h3 style="margin-bottom:14px;">🏔️ 宽窄东坡 — 文化符号</h3>
+      <p style="color:var(--text-secondary);margin-bottom:14px;">18 条笔记 | 赞 1,009 | 评 423 | 藏 241 | 均互动 93/篇</p>
+      <table>
+        <thead><tr><th>标题</th><th>作者</th><th>评</th><th>赞</th><th>藏</th></tr></thead>
+        <tbody>
+          <tr><td>有人懂宽窄吗</td><td>李加麻</td><td>204</td><td>211</td><td>32</td></tr>
+          <tr><td>避雷的成都特产</td><td>玟希希的希</td><td>85</td><td>12</td><td>4</td></tr>
+          <tr><td>苏东坡联名！这口粮太有文化了</td><td>烟保姆_阿烟</td><td>68</td><td>571</td><td>150</td></tr>
+          <tr><td>东坡还是很好抽的，味道柔和</td><td>空白</td><td>11</td><td>5</td><td>1</td></tr>
+          <tr><td>宽窄城市特色细支——眉州东坡</td><td>light man€</td><td>9</td><td>27</td><td>6</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box" style="margin-top:14px;">
+        <h4>话题特征</h4>
+        <ul class="insight-list">
+          <li>苏东坡文化联名是<strong>核心卖点</strong></li>
+          <li>"有人懂宽窄吗"引发大量讨论（204 评论）</li>
+          <li>存在"避雷"负面内容，口碑有分歧</li>
+          <li>口味评价：柔和、文化感强</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:14px;">🌸 宽窄锦上 — 话题之王</h3>
+      <p style="color:var(--text-secondary);margin-bottom:14px;">14 条笔记 | 赞 1,374 | 评 730 | 藏 447 | 均互动 182/篇</p>
+      <table>
+        <thead><tr><th>标题</th><th>作者</th><th>评</th><th>赞</th><th>藏</th></tr></thead>
+        <tbody>
+          <tr><td>生活就是小酒配宽窄 茉莉花香</td><td>到处跑的小杨同学</td><td>193</td><td>624</td><td>251</td></tr>
+          <tr><td>宽窄锦上你们买成多少</td><td>小啾啾</td><td>138</td><td>40</td><td>12</td></tr>
+          <tr><td>求推荐 成都南门宽窄锦上</td><td>杰克泼尼马</td><td>105</td><td>58</td><td>24</td></tr>
+          <tr><td>宽窄锦上</td><td>酒帮主</td><td>99</td><td>169</td><td>32</td></tr>
+          <tr><td>宽窄锦上</td><td>我们又不熟叫我小仙女就好</td><td>65</td><td>55</td><td>10</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box" style="margin-top:14px;">
+        <h4>话题特征</h4>
+        <ul class="insight-list">
+          <li><strong>讨论热度最高</strong>（均 52 评论/篇）</li>
+          <li>"茉莉花香"是核心口味标签</li>
+          <li>价格讨论多（"买成多少"）</li>
+          <li>地域性强（成都南门、实体店）</li>
+          <li>小酒配宽窄 = 生活方式标签</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:14px;">🐼 国宝之恋 — 收藏之王</h3>
+      <p style="color:var(--text-secondary);margin-bottom:14px;">17 条笔记 | 赞 1,729 | 评 220 | 藏 896 | 均互动 167/篇</p>
+      <table>
+        <thead><tr><th>标题</th><th>作者</th><th>评</th><th>赞</th><th>藏</th></tr></thead>
+        <tbody>
+          <tr><td>成都机场买🚬</td><td>🐟</td><td>63</td><td>20</td><td>8</td></tr>
+          <tr><td>这么贵抽完能找到自然答案吗？？？？</td><td>kkkkay</td><td>47</td><td>57</td><td>13</td></tr>
+          <tr><td>成都双流T2—国宝细支</td><td>野蛮原始人</td><td>35</td><td>80</td><td>37</td></tr>
+          <tr><td>新做的美甲真的好喜欢！</td><td>爱小✔</td><td>21</td><td>1,380</td><td>782</td></tr>
+          <tr><td>国宝之恋细支get</td><td>你看国宝熊猫</td><td>20</td><td>31</td><td>7</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight-box" style="margin-top:14px;">
+        <h4>话题特征</h4>
+        <ul class="insight-list">
+          <li><strong>收藏率最高</strong>（0.52），用户购买意愿最强</li>
+          <li><strong>均价最高</strong>，"这么贵"是高频词</li>
+          <li>机场/旅游渠道是主要购买场景</li>
+          <li>熊猫元素 = 四川特产/伴手礼</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: 用户行为分析 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">👥</span> 五、用户行为分析</div>
+    <div class="two-col">
+      <div class="card">
+        <div class="chart-container">
+          <img src="https://mdn.alipayobjects.com/one_clip/afts/img/7I1ZT4_fkiAAAAAASaAAAAgAoEACAQFr/original" alt="平均互动能力对比">
+          <div class="chart-caption">图5：各关键词平均互动能力对比</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chart-container">
+          <img src="https://mdn.alipayobjects.com/one_clip/afts/img/ocAST5JYQKYAAAAARDAAAAgAoEACAQFr/original" alt="收藏率对比">
+          <div class="chart-caption">图6：收藏率对比（收藏/点赞）</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="chart-container">
+        <img src="https://mdn.alipayobjects.com/one_clip/afts/img/dUKNT7hlv28AAAAAQ_AAAAgAoEACAQFr/original" alt="笔记类型分布">
+        <div class="chart-caption">图7：笔记类型分布</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: 核心洞察 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">💡</span> 六、核心洞察</div>
+
+    <div class="card">
+      <h3 style="margin-bottom:14px;">📌 产品定位差异</h3>
+      <div class="comparison-table">
+        <table>
+          <thead>
+            <tr><th>维度</th><th>🏔️ 宽窄东坡</th><th>🌸 宽窄锦上</th><th>🐼 国宝之恋</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>核心标签</strong></td><td>苏东坡文化联名</td><td>茉莉花香</td><td>熊猫/国宝</td></tr>
+            <tr><td><strong>价格定位</strong></td><td>中端</td><td>中端</td><td>高端</td></tr>
+            <tr><td><strong>用户画像</strong></td><td>文化爱好者</td><td>年轻女性/生活方式</td><td>商务/旅游</td></tr>
+            <tr><td><strong>购买场景</strong></td><td>日常/收藏</td><td>社交/搭配小酒</td><td>机场/伴手礼</td></tr>
+            <tr><td><strong>口碑方向</strong></td><td>文化感强</td><td>口味好评</td><td>贵但值得</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:14px;">🎯 关键发现</h3>
+      <ul class="insight-list">
+        <li><strong>宽窄锦上 = 话题之王</strong>：评论数最多，讨论最活跃，"茉莉花香"是核心记忆点</li>
+        <li><strong>国宝之恋 = 收藏之王</strong>：收藏率 52%，用户认可度最高，但价格敏感</li>
+        <li><strong>宽窄东坡 = 文化符号</strong>：苏东坡联名是差异化卖点，但讨论分散</li>
+        <li><strong>价格敏感度</strong>：宽窄锦上"买成多少"讨论多，国宝之恋"这么贵"是高频词</li>
+        <li><strong>地域性强</strong>：成都/四川是核心市场，机场/实体店是主要渠道</li>
+        <li><strong>内容噪音</strong>：国宝之恋搜索包含非烟草内容，需关键词优化</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:14px;">🔄 竞品对比视角</h3>
+      <div class="highlight-box">
+        <ul class="insight-list">
+          <li><strong>宽窄系列内部</strong>：东坡（文化）→ 锦上（口味）→ 国宝（高端），形成产品矩阵</li>
+          <li><strong>购买决策路径</strong>：讨论（锦上）→ 收藏（国宝）→ 购买（机场/实体店）</li>
+          <li><strong>社交传播</strong>：小酒配宽窄 = 生活方式标签，有破圈潜力</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 7: 建议 -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">📋</span> 七、建议</div>
+    <div class="card">
+      <ul class="insight-list">
+        <li>📌 <strong>内容策略</strong>：宽窄锦上适合做话题营销，国宝之恋适合做种草收藏</li>
+        <li>📌 <strong>渠道布局</strong>：机场/旅游渠道是国宝之恋核心场景，需重点维护</li>
+        <li>📌 <strong>价格管理</strong>：宽窄锦上价格讨论多，需统一价格信息</li>
+        <li>📌 <strong>口碑监测</strong>：存在"避雷"内容，需关注负面评价</li>
+        <li>📌 <strong>关键词优化</strong>：国宝之恋搜索噪音大，建议用"国宝之恋 香烟"精准搜索</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>🦞 报告由 <strong>小龙虾 AI</strong> 自动生成 &nbsp;|&nbsp; 数据来源：小红书搜索 API &nbsp;|&nbsp; 采集时间：2026-04-28 20:42</p>
+  <p style="margin-top:8px;">📄 原始数据：<a href="https://github.com/Rem202/openclawFiles/tree/main/reports" target="_blank">GitHub Repository</a></p>
+</div>
+
+</body>
+</html>
