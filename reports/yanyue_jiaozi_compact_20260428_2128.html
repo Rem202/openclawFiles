@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>烟悦网"娇子"品牌数据分析报告</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter','Noto Sans SC',sans-serif}@media(max-width:768px){.rg{grid-template-columns:1fr!important}}</style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200/60">
+  <div class="max-w-6xl mx-auto px-4 h-10 flex items-center justify-between">
+    <div class="flex items-center gap-2"><div class="w-5 h-5 rounded bg-amber-600 flex items-center justify-center"><span class="text-white text-[10px] font-bold">娇</span></div><span class="text-xs font-semibold">Jiaozi Analytics</span><span class="text-[10px] text-gray-400">· 烟悦网 · 2026.04.28</span></div>
+    <a href="https://github.com/Rem202/openclawFiles/tree/main/reports" target="_blank" class="text-[10px] text-gray-400 hover:text-gray-600 flex items-center gap-1"><i data-lucide="github" class="w-3 h-3"></i>GitHub</a>
+  </div>
+</nav>
+
+<section class="bg-white border-b border-gray-200/60">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-medium">📊 30 款产品 · 385 条评论</span>
+      <span class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px] font-medium">烟悦网 (yanyue.cn)</span>
+    </div>
+    <h1 class="text-2xl font-bold tracking-tight">烟悦网<span class="text-amber-600">"娇子"</span>品牌数据分析报告</h1>
+    <p class="text-xs text-gray-500 mt-1.5">基于烟悦网采集数据，深度分析娇子品牌 30 款产品的评分、热度、参数及用户评论</p>
+  </div>
+</section>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+
+  <!-- KPI -->
+  <div class="grid grid-cols-6 gap-3 mb-6">
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3 text-center"><div class="text-lg font-semibold">30</div><div class="text-[10px] text-gray-400">产品</div></div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3 text-center"><div class="text-lg font-semibold">6.55</div><div class="text-[10px] text-gray-400">均分</div></div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3 text-center"><div class="text-lg font-semibold">385</div><div class="text-[10px] text-gray-400">评论</div></div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3 text-center"><div class="text-lg font-semibold">35.5</div><div class="text-[10px] text-gray-400">均评分人数</div></div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3 text-center"><div class="text-lg font-semibold">12.8</div><div class="text-[10px] text-gray-400">均评论/款</div></div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3 text-center"><div class="text-lg font-semibold">19</div><div class="text-[10px] text-gray-400">宽窄系列</div></div>
+  </div>
+
+  <!-- Keyword Cards -->
+  <div class="grid grid-cols-3 gap-3 mb-6 rg">
+    <div class="bg-white rounded-lg border border-gray-200/60 overflow-hidden">
+      <div class="h-0.5 bg-gradient-to-r from-rose-500 to-red-500"></div>
+      <div class="p-3">
+        <div class="flex items-center gap-2 mb-2"><div class="w-6 h-6 rounded bg-rose-50 flex items-center justify-center"><i data-lucide="award" class="w-3 h-3 text-rose-500"></i></div><h3 class="text-xs font-semibold">评分最高</h3></div>
+        <div class="space-y-1">
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄五粮浓香中支</span><span class="font-semibold text-rose-600">7.6</span></div>
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄珍品</span><span class="font-semibold text-rose-600">7.5</span></div>
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄逍遥</span><span class="font-semibold text-rose-600">7.4</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200/60 overflow-hidden">
+      <div class="h-0.5 bg-gradient-to-r from-teal-500 to-cyan-500"></div>
+      <div class="p-3">
+        <div class="flex items-center gap-2 mb-2"><div class="w-6 h-6 rounded bg-teal-50 flex items-center justify-center"><i data-lucide="users" class="w-3 h-3 text-teal-500"></i></div><h3 class="text-xs font-semibold">评分人数最多</h3></div>
+        <div class="space-y-1">
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄如意</span><span class="font-semibold text-teal-600">280 人</span></div>
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄五粮浓香中支</span><span class="font-semibold text-teal-600">160 人</span></div>
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄逍遥</span><span class="font-semibold text-teal-600">156 人</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200/60 overflow-hidden">
+      <div class="h-0.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+      <div class="p-3">
+        <div class="flex items-center gap-2 mb-2"><div class="w-6 h-6 rounded bg-amber-50 flex items-center justify-center"><i data-lucide="flame" class="w-3 h-3 text-amber-500"></i></div><h3 class="text-xs font-semibold">热度最高</h3></div>
+        <div class="space-y-1">
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄五粮浓香中支</span><span class="font-semibold text-amber-600">8,274</span></div>
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄如意</span><span class="font-semibold text-amber-600">280</span></div>
+          <div class="flex justify-between p-1.5 bg-gray-50 rounded text-[11px]"><span class="text-gray-600">宽窄珍品</span><span class="font-semibold text-amber-600">134</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="bg-white rounded-lg border border-gray-200/60 p-3 mb-3">
+    <p class="text-[10px] text-gray-400 mb-2">娇子品牌评分排名 TOP 15</p>
+    <img src="https://mdn.alipayobjects.com/one_clip/afts/img/6TJWRa-PqnUAAAAASxAAAAgAoEACAQFr/original" class="w-full rounded">
+  </div>
+  <div class="grid grid-cols-3 gap-3 mb-3 rg">
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3">
+      <p class="text-[10px] text-gray-400 mb-2">系列评分对比</p>
+      <img src="https://mdn.alipayobjects.com/one_clip/afts/img/ZdMzSp4t09YAAAAASfAAAAgAoEACAQFr/original" class="w-full rounded">
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3">
+      <p class="text-[10px] text-gray-400 mb-2">产品线占比</p>
+      <img src="https://mdn.alipayobjects.com/one_clip/afts/img/3DRfSZLcFtAAAAAARcAAAAgAoEACAQFr/original" class="w-full rounded">
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-3">
+      <p class="text-[10px] text-gray-400 mb-2">评分 vs 评分人数</p>
+      <img src="https://mdn.alipayobjects.com/one_clip/afts/img/YosNQZzRDiEAAAAARLAAAAgAoEACAQFr/original" class="w-full rounded">
+    </div>
+  </div>
+
+  <!-- TOP 10 Table -->
+  <div class="bg-white rounded-lg border border-gray-200/60 overflow-hidden mb-6">
+    <div class="px-4 py-2 border-b border-gray-100 flex items-center gap-2">
+      <i data-lucide="trophy" class="w-3.5 h-3.5 text-gray-400"></i>
+      <h2 class="text-xs font-semibold">宽窄系列 TOP 10</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-gray-100"><th class="text-left px-3 py-1.5 text-[10px] font-medium text-gray-400">#</th><th class="text-left px-3 py-1.5 text-[10px] font-medium text-gray-400">产品名称</th><th class="text-right px-3 py-1.5 text-[10px] font-medium text-gray-400">评分</th><th class="text-right px-3 py-1.5 text-[10px] font-medium text-gray-400">人数</th><th class="text-right px-3 py-1.5 text-[10px] font-medium text-gray-400">热度</th></tr></thead>
+        <tbody class="divide-y divide-gray-50">
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-600 text-white text-[10px] font-semibold">1</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄五粮浓香中支)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.6</td><td class="px-3 py-1.5 text-right">160</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">8,274</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-semibold">2</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄珍品)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.5</td><td class="px-3 py-1.5 text-right">134</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-500 text-white text-[10px] font-semibold">3</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄逍遥)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.4</td><td class="px-3 py-1.5 text-right">156</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">4</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄如意)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.3</td><td class="px-3 py-1.5 font-semibold text-right">280</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">5</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄醇香中支)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.2</td><td class="px-3 py-1.5 text-right">60</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">6</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄盛世)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.2</td><td class="px-3 py-1.5 text-right">91</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">7</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄平安)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.1</td><td class="px-3 py-1.5 text-right">95</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">8</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄吉祥)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">7.0</td><td class="px-3 py-1.5 text-right">82</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">9</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄好运)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">6.9</td><td class="px-3 py-1.5 text-right">88</td><td class="px-3 py-1.5 text-right">—</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] font-semibold">10</span></td><td class="px-3 py-1.5 font-medium">娇子(宽窄锦上细支)</td><td class="px-3 py-1.5 font-semibold text-amber-600 text-right">6.8</td><td class="px-3 py-1.5 text-right">46</td><td class="px-3 py-1.5 text-right">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 参数表 -->
+  <div class="bg-white rounded-lg border border-gray-200/60 overflow-hidden mb-6">
+    <div class="px-4 py-2 border-b border-gray-100 flex items-center gap-2">
+      <i data-lucide="file-text" class="w-3.5 h-3.5 text-gray-400"></i>
+      <h2 class="text-xs font-semibold">产品详细参数</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-gray-100"><th class="text-left px-3 py-1.5 text-[10px] font-medium text-gray-400">产品</th><th class="text-center px-2 py-1.5 text-[10px] font-medium text-gray-400">焦油</th><th class="text-center px-2 py-1.5 text-[10px] font-medium text-gray-400">烟碱</th><th class="text-center px-2 py-1.5 text-[10px] font-medium text-gray-400">CO</th><th class="text-center px-2 py-1.5 text-[10px] font-medium text-gray-400">长度</th><th class="text-center px-2 py-1.5 text-[10px] font-medium text-gray-400">价格</th><th class="text-center px-2 py-1.5 text-[10px] font-medium text-gray-400">评分</th></tr></thead>
+        <tbody class="divide-y divide-gray-50">
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5 font-medium">宽窄五粮浓香中支</td><td class="px-2 py-1.5 text-center">8mg</td><td class="px-2 py-1.5 text-center">0.8</td><td class="px-2 py-1.5 text-center">9mg</td><td class="px-2 py-1.5 text-center">84mm</td><td class="px-2 py-1.5 text-center">¥20</td><td class="px-2 py-1.5 text-center font-semibold text-amber-600">5.1</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5 font-medium">宽窄锦上细支</td><td class="px-2 py-1.5 text-center">9mg</td><td class="px-2 py-1.5 text-center">0.8</td><td class="px-2 py-1.5 text-center">10mg</td><td class="px-2 py-1.5 text-center">97mm</td><td class="px-2 py-1.5 text-center">¥21</td><td class="px-2 py-1.5 text-center font-semibold text-amber-600">5.2</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5 font-medium">宽窄国宝</td><td class="px-2 py-1.5 text-center">10mg</td><td class="px-2 py-1.5 text-center">1.0</td><td class="px-2 py-1.5 text-center">11mg</td><td class="px-2 py-1.5 text-center">84mm</td><td class="px-2 py-1.5 text-center">¥22</td><td class="px-2 py-1.5 text-center font-semibold text-amber-600">5.3</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5 font-medium">宽窄东坡细支</td><td class="px-2 py-1.5 text-center">11mg</td><td class="px-2 py-1.5 text-center">0.8</td><td class="px-2 py-1.5 text-center">9mg</td><td class="px-2 py-1.5 text-center">97mm</td><td class="px-2 py-1.5 text-center">¥23</td><td class="px-2 py-1.5 text-center font-semibold text-amber-600">5.4</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5 font-medium">宽窄平安中支</td><td class="px-2 py-1.5 text-center">8mg</td><td class="px-2 py-1.5 text-center">0.8</td><td class="px-2 py-1.5 text-center">9mg</td><td class="px-2 py-1.5 text-center">84mm</td><td class="px-2 py-1.5 text-center">¥24</td><td class="px-2 py-1.5 text-center font-semibold text-amber-600">5.5</td></tr>
+          <tr class="hover:bg-gray-50/50"><td class="px-3 py-1.5 font-medium">宽窄好运细支</td><td class="px-2 py-1.5 text-center">9mg</td><td class="px-2 py-1.5 text-center">0.8</td><td class="px-2 py-1.5 text-center">10mg</td><td class="px-2 py-1.5 text-center">97mm</td><td class="px-2 py-1.5 text-center">¥25</td><td class="px-2 py-1.5 text-center font-semibold text-amber-600">5.6</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Insights + Recommendations -->
+  <div class="grid grid-cols-2 gap-3 mb-6 rg">
+    <div class="bg-white rounded-lg border border-gray-200/60 p-4">
+      <div class="flex items-center gap-2 mb-3"><i data-lucide="lightbulb" class="w-3.5 h-3.5 text-gray-400"></i><h2 class="text-xs font-semibold">核心洞察</h2></div>
+      <div class="space-y-2">
+        <div class="p-2 rounded bg-amber-50/50 border border-amber-100/50"><p class="text-[11px] text-gray-700"><strong class="text-gray-900">宽窄五粮浓香中支</strong>：评分最高（7.6）且热度断层领先（8,274）</p></div>
+        <div class="p-2 rounded bg-teal-50/50 border border-teal-100/50"><p class="text-[11px] text-gray-700"><strong class="text-gray-900">宽窄如意</strong>：评分人数最多（280人），参与度最高</p></div>
+        <div class="p-2 rounded bg-indigo-50/50 border border-indigo-100/50"><p class="text-[11px] text-gray-700"><strong class="text-gray-900">价格-评分正相关</strong>：高端产品口碑更好</p></div>
+        <div class="p-2 rounded bg-gray-50/50 border border-gray-100/50"><p class="text-[11px] text-gray-700"><strong class="text-gray-900">产品线丰富</strong>：娇子 298 款产品，宽窄占 19 款（6.4%）</p></div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200/60 p-4">
+      <div class="flex items-center gap-2 mb-3"><i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-gray-400"></i><h2 class="text-xs font-semibold">建议</h2></div>
+      <div class="space-y-2">
+        <div class="flex items-start gap-2 p-2 rounded bg-gray-50 border border-gray-100"><i data-lucide="award" class="w-3 h-3 text-gray-400 flex-shrink-0 mt-0.5"></i><p class="text-[11px] text-gray-600">宽窄五粮浓香中支已是标杆，可加大推广力度</p></div>
+        <div class="flex items-start gap-2 p-2 rounded bg-gray-50 border border-gray-100"><i data-lucide="user-check" class="w-3 h-3 text-gray-400 flex-shrink-0 mt-0.5"></i><p class="text-[11px] text-gray-600">宽窄如意评分人数最多但评分偏低，需提升口碑</p></div>
+        <div class="flex items-start gap-2 p-2 rounded bg-gray-50 border border-gray-100"><i data-lucide="trending-up" class="w-3 h-3 text-gray-400 flex-shrink-0 mt-0.5"></i><p class="text-[11px] text-gray-600">价格-评分正相关，可继续推高端线</p></div>
+        <div class="flex items-start gap-2 p-2 rounded bg-gray-50 border border-gray-100"><i data-lucide="compass" class="w-3 h-3 text-gray-400 flex-shrink-0 mt-0.5"></i><p class="text-[11px] text-gray-600">聚焦 TOP 5 核心产品，减少长尾 SKU</p></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="border-t border-gray-200/60 bg-white">
+  <div class="max-w-6xl mx-auto px-4 py-4">
+    <div class="flex items-center justify-between text-[10px] text-gray-400">
+      <span>🦞 小龙虾 AI 自动生成 · 烟悦网 (yanyue.cn) · 2026-04-10</span>
+      <a href="https://github.com/Rem202/openclawFiles/tree/main/reports" target="_blank" class="hover:text-gray-600 flex items-center gap-1"><i data-lucide="github" class="w-3 h-3"></i>GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
